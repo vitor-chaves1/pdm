@@ -3,11 +3,13 @@ import { TextInput, Button } from 'react-native-paper';
 import Titulo from '../components/Titulo';
 import { useState } from 'react';
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
+
   const handleEntrar = () => {
     console.log(email, senha);
+    props.onLogin()
   };
 
   return (
