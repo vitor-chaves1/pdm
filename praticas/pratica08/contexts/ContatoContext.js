@@ -17,7 +17,7 @@ const ContatoProvider = ({ children }) => {
   };
 
   const buscar = (id) => {
-    contatos.find((contato) => contato.id === id);
+    return contatos.find((contato) => contato.id === id);
   };
 
   const atualizar = (id, nome, telefone) => {

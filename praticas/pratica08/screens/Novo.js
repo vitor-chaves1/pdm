@@ -27,7 +27,10 @@ const Novo = ({ navigation }) => {
         <Controller
           name={'nome'}
           control={control}
-          rules={{ required: { value: true, message: 'Nome é obrigatório' } }}
+          rules={{
+            required: { value: true, message: 'Nome é obrigatório' },
+            minLength: { value: 3, message: 'No minimo 3 caracteres' },
+          }}
           render={({ field: { value, onChange } }) => (
             <TextInput
               label={'Nome'}
@@ -45,6 +48,11 @@ const Novo = ({ navigation }) => {
           control={control}
           rules={{
             required: { value: true, message: 'Telefone é obrigatório' },
+            pattern: {
+              value:
+                /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/,
+              message: 'Telefone invalido',
+            },
           }}
           render={({ field: { value, onChange } }) => (
             <TextInput
