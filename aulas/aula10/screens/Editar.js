@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import { Appbar, TextInput, Button } from 'react-native-paper';
 import { ContatoContext } from '../contexts/ContatoContext';
@@ -6,10 +6,16 @@ import { ContatoContext } from '../contexts/ContatoContext';
 const Editar = ({ route, navigation }) => {
   const { contatoId } = route.params;
   const { buscar, atualizar } = useContext(ContatoContext);
-  const contato = buscar(contatoId);
 
-  const [nome, setNome] = useState(contato?.nome);
-  const [telefone, setTelefone] = useState(contato?.telefone);
+  const [telefone, setTelefone] = useState();
+  const [nome, setNome] = useState();
+
+  useEffect(() => {
+    buscar(contatoId).then((contato) => {
+      setNome(contato.nome);
+      setTelefone(contato.telefone);
+    });
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>

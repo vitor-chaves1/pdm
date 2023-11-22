@@ -1,5 +1,11 @@
 import { createContext, useState } from 'react';
-import { listarTodos, incluir } from '../services/ContatoService';
+import {
+  listarTodos,
+  incluir,
+  excluir,
+  listarPeloId,
+  alterar,
+} from '../services/ContatoService';
 
 const ContatoContext = createContext();
 
@@ -24,11 +30,36 @@ const ContatoProvider = ({ children }) => {
     }
   };
 
-  const buscar = (id) => {};
+  const buscar = async (id) => {
+    try {
+      return await listarPeloId(id);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-  const atualizar = (id, nome, telefone) => {};
+  const atualizar = async (id, nome, telefone) => {
+    try {
+      const contatoAtualizado = await alterar(id, nome, telefone);
+      const listaAtualizada = contatos.map((contato) =>
+        contato.id === id ? contatoAtualizado : contato
+      );
+      setContatos(listaAtualizada);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-  const remover = (id) => {};
+  const remover = async (id) => {
+    try {
+      await excluir(id);
+      const index = contatos.findIndex((contato) => contato.id === id);
+      contatos.splice(index, 1);
+      setContatos([...contatos]);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <ContatoContext.Provider

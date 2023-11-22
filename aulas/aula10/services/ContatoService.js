@@ -29,4 +29,33 @@ const incluir = async (nome, telefone) => {
   }
 };
 
-export { listarTodos, incluir };
+const excluir = async (id) => {
+  try {
+    await axios.delete(`${BASE_URL}/contatos/data/${id}.json`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const listarPeloId = async (id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/contatos/data/${id}.json`);
+    return { id, ...response.data };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const alterar = async (id, nome, telefone) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/contatos/data/${id}.json`, {
+      nome,
+      telefone,
+    });
+    return { id, ...response.data };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { listarTodos, incluir, excluir, listarPeloId, alterar };
